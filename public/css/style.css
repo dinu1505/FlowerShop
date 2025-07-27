@@ -1,0 +1,38 @@
+/* Login Page Styles */
+.bg-cover {
+    background-size: cover;
+    background-position: center;
+    min-height: 100%;
+}
+
+.card {
+    overflow: hidden;
+}
+
+/* Form toggle animation */
+#registerForm,
+#forgotPassword {
+    transition: all 0.3s ease;
+}
+
+/* Social buttons */
+.btn-outline-secondary {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* About page team cards */
+.team-card .card-img-top {
+    height: 250px;
+    object-fit: cover;
+}
+
+/* Map container */
+.ratio iframe {
+    border: 0;
+    border-radius: 8px;
+}
