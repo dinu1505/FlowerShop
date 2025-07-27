@@ -31,7 +31,9 @@
                         <a href="{{ url('/') }}" class="text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->is('/') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">Home</a>
                         
                         <!-- Flower Categories Dropdown -->
+                         
                         <div class="relative" x-data="{ flowerMenuOpen: false }">
+                            <a href="{{url('flowers')}}">
                             <button @click="flowerMenuOpen = !flowerMenuOpen" 
                                     class="text-white px-3 py-2 rounded-md text-sm font-medium flex items-center {{ request()->is('flowers') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">
                                 Floral Collection
@@ -39,6 +41,7 @@
                                     <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                 </svg>
                             </button>
+                            </a>
 
                             <!-- Flower Dropdown Menu -->
                             <div x-show="flowerMenuOpen" 
@@ -51,13 +54,13 @@
                                  x-transition:leave-end="transform opacity-0 scale-95"
                                  class="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
                                 <div class="py-1">
-                                    <a href="#rose" @click="flowerMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 flex items-center">
+                                    <a href="flowers#rose" @click="flowerMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 flex items-center">
                                         <i class="fas fa-heart text-emerald-600 mr-2 w-5"></i> Rose Collection
                                     </a>
-                                    <a href="#lotus" @click="flowerMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 flex items-center">
+                                    <a href="flowers#lotus" @click="flowerMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 flex items-center">
                                         <i class="fas fa-spa text-emerald-600 mr-2 w-5"></i> Lotus Collection
                                     </a>
-                                    <a href="#otherfl" @click="flowerMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 flex items-center">
+                                    <a href="flowers#otherfl" @click="flowerMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 flex items-center">
                                         <i class="fas fa-leaf text-emerald-600 mr-2 w-5"></i> Other Blooms
                                     </a>
                                 </div>
