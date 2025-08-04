@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\BouquetOrderController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', function () {
     return view('index');
@@ -32,5 +35,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::post('/order/add', [OrderController::class, 'add'])->name('order.add');
+Route::post('/order/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
+
+Route::post('/order-bouquet', [BouquetOrderController::class, 'placeBouquetOrder'])->name('order.bouquet');
+Route::post('/cancel-bouquet', [BouquetOrder::class, 'cancelBouquetOrder'])->name('cancel.bouquet');
+
+
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/checkout/update-quantity/{id}', [CheckoutController::class, 'updateQuantity'])->name('checkout.updateQuantity');
+Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('order.place');
 
 require __DIR__.'/auth.php';

@@ -211,31 +211,42 @@
                         <i class="fas fa-heart text-emerald-600 mr-2"></i> For Your Loved Ones
                     </h2>
                     <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <!-- Red Roses Bouquet -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                                Sale
-                            </div>
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/red_rosebq.jpg')}}" alt="Red Roses Bouquet" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Red Roses Bouquet</h3>
-                                <p class="mt-1 text-sm text-gray-500">For your special one - a dozen passionate red roses</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <div>
-                                        <span class="text-sm line-through text-gray-500 mr-2">Rs.1000.00</span>
-                                        <span class="text-base font-bold text-emerald-600">Rs.899.99</span>
-                                    </div>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
+                      <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+    <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
+        Sale
+    </div>
+    <div class="h-64 w-full overflow-hidden">
+        <img src="{{ asset('images/red_rosebq.jpg') }}" alt="Red Roses Bouquet" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
+    </div>
+    <div class="p-4">
+        <h3 class="text-lg font-medium text-gray-900">Red Roses Bouquet</h3>
+        <p class="mt-1 text-sm text-gray-500">For your special one - a dozen passionate red roses</p>
+        <div class="mt-4 flex justify-between items-center">
+            <div>
+                <span class="text-sm line-through text-gray-500 mr-2">Rs.1000.00</span>
+                <span class="text-base font-bold text-emerald-600">Rs.899.99</span>
+            </div>
+            <!-- Add Button -->
+            <form method="POST" action="{{ route('order.bouquet') }}">
+                @csrf
+                <input type="hidden" name="product_name" value="Red Roses Bouquet">
+                <input type="hidden" name="price" value="899.99">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <!-- Cancel Button -->
+        <form method="POST" action="{{ route('cancel.bouquet') }}">
+            @csrf
+            <input type="hidden" name="product_name" value="Red Roses Bouquet">
+            <button type="submit" class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
 
                         <!-- Yellow Roses Bouquet -->
                         <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -247,13 +258,25 @@
                                 <p class="mt-1 text-sm text-gray-500">For your closer ones - cheerful yellow blooms</p>
                                 <div class="mt-4 flex justify-between items-center">
                                     <span class="text-base font-bold text-emerald-600">Rs.799.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
+                                     <!-- Add Button -->
+            <form method="POST" action="{{ route('order.bouquet') }}">
+                @csrf
+                <input type="hidden" name="product_name" value="Yellow Roses Bouquet">
+                <input type="hidden" name="price" value="799.99">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <!-- Cancel Button -->
+        <form method="POST" action="{{ route('cancel.bouquet') }}">
+            @csrf
+            <input type="hidden" name="product_name" value="Yellow Roses Bouquet">
+            <button type="submit" class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
                             </div>
                         </div>
 
@@ -270,13 +293,25 @@
                                 <p class="mt-1 text-sm text-gray-500">For special occasions - a vibrant mix of blooms</p>
                                 <div class="mt-4 flex justify-between items-center">
                                     <span class="text-base font-bold text-emerald-600">Rs.900.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
+                                      <!-- Add Button -->
+            <form method="POST" action="{{ route('order.bouquet') }}">
+                @csrf
+                <input type="hidden" name="product_name" value="Mixed Bouquet">
+                <input type="hidden" name="price" value="900.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <!-- Cancel Button -->
+        <form method="POST" action="{{ route('cancel.bouquet') }}">
+            @csrf
+            <input type="hidden" name="product_name" value="Mixed Bouquet">
+            <button type="submit" class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
                             </div>
                         </div>
                     </div>
@@ -298,13 +333,25 @@
                                 <p class="mt-1 text-sm text-gray-500">Elegant rose basket to surprise anyone special</p>
                                 <div class="mt-4 flex justify-between items-center">
                                     <span class="text-base font-bold text-emerald-600">Rs.1500.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
+                                        <!-- Add Button -->
+            <form method="POST" action="{{ route('order.bouquet') }}">
+                @csrf
+                <input type="hidden" name="product_name" value="Roses Basket">
+                <input type="hidden" name="price" value="1500.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <!-- Cancel Button -->
+        <form method="POST" action="{{ route('cancel.bouquet') }}">
+            @csrf
+            <input type="hidden" name="product_name" value="Rose Basket">
+            <button type="submit" class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
                             </div>
                         </div>
 
@@ -318,13 +365,25 @@
                                 <p class="mt-1 text-sm text-gray-500">Beautiful carnations arranged for happiness</p>
                                 <div class="mt-4 flex justify-between items-center">
                                     <span class="text-base font-bold text-emerald-600">Rs.850.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
+                                         <!-- Add Button -->
+            <form method="POST" action="{{ route('order.bouquet') }}">
+                @csrf
+                <input type="hidden" name="product_name" value="Carnation Basket">
+                <input type="hidden" name="price" value="850.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <!-- Cancel Button -->
+        <form method="POST" action="{{ route('cancel.bouquet') }}">
+            @csrf
+            <input type="hidden" name="product_name" value="Carnation Basket">
+            <button type="submit" class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
                             </div>
                         </div>
 
@@ -344,13 +403,25 @@
                                         <span class="text-sm line-through text-gray-500 mr-2">Rs.800.00</span>
                                         <span class="text-base font-bold text-emerald-600">Rs.650.00</span>
                                     </div>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
+                                         <!-- Add Button -->
+            <form method="POST" action="{{ route('order.bouquet') }}">
+                @csrf
+                <input type="hidden" name="product_name" value="Mixed Basket">
+                <input type="hidden" name="price" value="650.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <!-- Cancel Button -->
+        <form method="POST" action="{{ route('cancel.bouquet') }}">
+            @csrf
+            <input type="hidden" name="product_name" value="Mixed Basket">
+            <button type="submit" class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
                             </div>
                         </div>
                     </div>
@@ -372,13 +443,25 @@
                                 <p class="mt-1 text-sm text-gray-500">For your love ones - a heart filled with passion</p>
                                 <div class="mt-4 flex justify-between items-center">
                                     <span class="text-base font-bold text-emerald-600">Rs.5000.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
+                                        <!-- Add Button -->
+            <form method="POST" action="{{ route('order.bouquet') }}">
+                @csrf
+                <input type="hidden" name="product_name" value="Red Roses Heart">
+                <input type="hidden" name="price" value="5000.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <!-- Cancel Button -->
+        <form method="POST" action="{{ route('cancel.bouquet') }}">
+            @csrf
+            <input type="hidden" name="product_name" value="Red Roses Heart">
+            <button type="submit" class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
                             </div>
                         </div>
 
@@ -395,13 +478,25 @@
                                 <p class="mt-1 text-sm text-gray-500">Filled with love and cheerful memories</p>
                                 <div class="mt-4 flex justify-between items-center">
                                     <span class="text-base font-bold text-emerald-600">Rs.6000.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
+                                         <!-- Add Button -->
+            <form method="POST" action="{{ route('order.bouquet') }}">
+                @csrf
+                <input type="hidden" name="product_name" value="Yellow Roses Hearts">
+                <input type="hidden" name="price" value="6000.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <!-- Cancel Button -->
+        <form method="POST" action="{{ route('cancel.bouquet') }}">
+            @csrf
+            <input type="hidden" name="product_name" value="Yellow Roses Heart">
+            <button type="submit" class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
                             </div>
                         </div>
 
@@ -414,17 +509,29 @@
                                 <img src="{{asset('images/bigH.jpg')}}" alt="Big Heart" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
                             </div>
                             <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Big Heart</h3>
-                                <p class="mt-1 text-sm text-gray-500">Show your love with this grand floral heart</p>
+                                <h3 class="text-lg font-medium text-gray-900">Colorful Heart</h3>
+                                <p class="mt-1 text-sm text-gray-500">Show your love with this Colorfully.<br>(Include All Flowers)</p>
                                 <div class="mt-4 flex justify-between items-center">
                                     <span class="text-base font-bold text-emerald-600">Rs.10,000.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
+                                       <!-- Add Button -->
+            <form method="POST" action="{{ route('order.bouquet') }}">
+                @csrf
+                <input type="hidden" name="product_name" value="Colourfull Heart">
+                <input type="hidden" name="price" value="10000.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <!-- Cancel Button -->
+        <form method="POST" action="{{ route('cancel.bouquet') }}">
+            @csrf
+            <input type="hidden" name="product_name" value="Colourfull Heart">
+            <button type="submit" class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
                             </div>
                         </div>
                     </div>

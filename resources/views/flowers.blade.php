@@ -166,6 +166,13 @@
         </div>
     </nav>
 
+    @if(session('success'))
+    <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">
+        {{ session('success') }}
+    </div>
+    @endif
+
+
     <main class="py-8">
         <!-- Hero Section -->
         <section class="py-8 bg-emerald-50 border-b border-emerald-100">
@@ -208,75 +215,94 @@
                     </h2>
                     <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
                         <!-- Red Roses -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                                New Arrival
-                            </div>
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/red rose.jpg')}}" alt="Red Roses" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Red Roses</h3>
-                                <p class="mt-1 text-sm text-gray-500">Classic red roses, a dozen stems of passionate perfection</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.1000.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
+<div class="bg-white rounded-2xl shadow-md overflow-hidden">
+    <img src="{{ asset('images/red rose.jpg') }}" alt="Red Roses" class="w-full h-50 object-cover">
+    <div class="p-4">
+        <h3 class="text-lg font-semibold text-gray-800">Red Roses</h3>
+        <p class="text-gray-600 text-sm">A bouquet of fresh red roses.</p>
+
+        <div class="mt-4 flex justify-between items-center">
+            <span class="text-base font-bold text-emerald-600">Rs.1000.00</span>
+            <form action="{{ route('order.add') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_name" value="Red Roses">
+                <input type="hidden" name="price" value="1000.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <form action="{{ route('order.cancel') }}" method="POST" class="mt-2">
+            @csrf
+            <input type="hidden" name="product_name" value="Red Roses">
+            <button type="submit" class="w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
+
 
                         <!-- White Roses -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/whiteRose.jpg')}}" alt="White Roses" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">White Roses</h3>
-                                <p class="mt-1 text-sm text-gray-500">Elegant white roses, a dozen stems of pure beauty</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.799.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
+<div class="bg-white rounded-2xl shadow-md overflow-hidden">
+    <img src="{{ asset('images/whiterose.jpg') }}" alt="White Roses" class="w-full h-55 object-cover">
+    <div class="p-4">
+        <h3 class="text-lg font-semibold text-gray-800">White Roses</h3>
+        <p class="text-gray-600 text-sm">Classic bouquet of white roses.</p>
 
-                        <!-- Yellow Roses -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                                Sale
-                            </div>
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/yellowrose.jpg')}}" alt="Yellow Roses" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Yellow Roses</h3>
-                                <p class="mt-1 text-sm text-gray-500">Sunny yellow roses, 8 stems of cheerful delight</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <div>
-                                        <span class="text-sm line-through text-gray-500 mr-2">Rs.899.99</span>
-                                        <span class="text-base font-bold text-emerald-600">Rs.799.99</span>
-                                    </div>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="mt-4 flex justify-between items-center">
+            <span class="text-base font-bold text-emerald-600">Rs.950.00</span>
+            <form action="{{ route('order.add') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_name" value="White Roses">
+                <input type="hidden" name="price" value="950.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <form action="{{ route('order.cancel') }}" method="POST" class="mt-2">
+            @csrf
+            <input type="hidden" name="product_name" value="White Roses">
+            <button type="submit" class="w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
+
+                        <!-- Yellow Rose -->
+<div class="bg-white rounded-2xl shadow-md overflow-hidden">
+    <img src="{{ asset('images/yellowrose.jpg') }}" alt="Yellow Rose" class="w-full h-50 object-cover">
+    <div class="p-4">
+        <h3 class="text-lg font-semibold text-gray-800">Yellow Rose</h3>
+        <p class="text-gray-600 text-sm">Bright and cheerful yellow rose bouquet.</p>
+
+        <div class="mt-4 flex justify-between items-center">
+            <span class="text-base font-bold text-emerald-600">Rs.850.00</span>
+            <form action="{{ route('order.add') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_name" value="Yellow Rose">
+                <input type="hidden" name="price" value="850.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+
+        <form action="{{ route('order.cancel') }}" method="POST" class="mt-2">
+            @csrf
+            <input type="hidden" name="product_name" value="Yellow Rose">
+            <button type="submit" class="w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
+</div>
+
 
                 <!-- Lotus Section -->
                 <div id="lotus" class="mb-12">
@@ -284,70 +310,96 @@
                         <i class="fas fa-spa text-emerald-600 mr-2"></i> Lotus Collection
                     </h2>
                     <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <!-- White Lotus -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/Wlotus.jpg')}}" alt="White Lotus" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">White Lotus</h3>
-                                <p class="mt-1 text-sm text-gray-500">Pure white lotus, 10 stems of spiritual elegance</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.699.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
+                      <!-- White Lotus -->
+<div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+    <div class="h-64 w-full overflow-hidden">
+        <img src="{{asset('images/Wlotus.jpg')}}" alt="White Lotus" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
+    </div>
+    <div class="p-4">
+        <h3 class="text-lg font-medium text-gray-900">White Lotus</h3>
+        <p class="mt-1 text-sm text-gray-500">Pure white lotus, 10 stems of spiritual elegance</p>
+        <div class="mt-4 flex justify-between items-center">
+            <span class="text-base font-bold text-emerald-600">Rs.699.99</span>
+            <form action="{{ route('order.add') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_name" value="White Lotus">
+                <input type="hidden" name="price" value="699.99">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+        <form action="{{ route('order.cancel') }}" method="POST" class="mt-2">
+            @csrf
+            <input type="hidden" name="product_name" value="White Lotus">
+            <button type="submit" class="w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
 
-                        <!-- Pink Lotus -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/Plotus.jpg')}}" alt="Pink Lotus" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Pink Lotus</h3>
-                                <p class="mt-1 text-sm text-gray-500">Beautiful pink lotus, 10 stems of delicate charm</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.599.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
+<!-- Pink Lotus -->
+<div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+    <div class="h-64 w-full overflow-hidden">
+        <img src="{{asset('images/Plotus.jpg')}}" alt="Pink Lotus" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
+    </div>
+    <div class="p-4">
+        <h3 class="text-lg font-medium text-gray-900">Pink Lotus</h3>
+        <p class="mt-1 text-sm text-gray-500">Beautiful pink lotus, 10 stems of delicate charm</p>
+        <div class="mt-4 flex justify-between items-center">
+            <span class="text-base font-bold text-emerald-600">Rs.599.99</span>
+            <form action="{{ route('order.add') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_name" value="Pink Lotus">
+                <input type="hidden" name="price" value="599.99">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+        <form action="{{ route('order.cancel') }}" method="POST" class="mt-2">
+            @csrf
+            <input type="hidden" name="product_name" value="Pink Lotus">
+            <button type="submit" class="w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
 
-                        <!-- Blue Lotus -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                                New Arrival
-                            </div>
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/Blotus.jpg')}}" alt="Blue Lotus" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Blue Lotus</h3>
-                                <p class="mt-1 text-sm text-gray-500">Rare blue lotus, 10 stems of mystical beauty</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.1099.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- Blue Lotus -->
+<div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+    <div class="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
+        New Arrival
+    </div>
+    <div class="h-64 w-full overflow-hidden">
+        <img src="{{asset('images/Blotus.jpg')}}" alt="Blue Lotus" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
+    </div>
+    <div class="p-4">
+        <h3 class="text-lg font-medium text-gray-900">Blue Lotus</h3>
+        <p class="mt-1 text-sm text-gray-500">Rare blue lotus, 10 stems of mystical beauty</p>
+        <div class="mt-4 flex justify-between items-center">
+            <span class="text-base font-bold text-emerald-600">Rs.1099.99</span>
+            <form action="{{ route('order.add') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_name" value="Blue Lotus">
+                <input type="hidden" name="price" value="1099.99">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+        <form action="{{ route('order.cancel') }}" method="POST" class="mt-2">
+            @csrf
+            <input type="hidden" name="product_name" value="Blue Lotus">
+            <button type="submit" class="w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
+</div>
 
                 <!-- Other Flowers Section -->
                 <div id="otherfl">
@@ -356,64 +408,94 @@
                     </h2>
                     <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
                         <!-- Carnations -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/carnation.jpg')}}" alt="Carnations" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Carnations</h3>
-                                <p class="mt-1 text-sm text-gray-500">Colorful carnations, 10 stems of lasting beauty</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.700.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
+<div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+    <div class="h-64 w-full overflow-hidden">
+        <img src="{{asset('images/carnation.jpg')}}" alt="Carnations" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
+    </div>
+    <div class="p-4">
+        <h3 class="text-lg font-medium text-gray-900">Carnations</h3>
+        <p class="mt-1 text-sm text-gray-500">Colorful carnations, 10 stems of lasting beauty</p>
+        <div class="mt-4 flex justify-between items-center">
+            <span class="text-base font-bold text-emerald-600">Rs.700.00</span>
+             <form action="{{ route('order.add') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_name" value="Carnations">
+                <input type="hidden" name="price" value="700.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+        <form action="{{ route('order.cancel') }}" method="POST" class="mt-2">
+            @csrf
+            <input type="hidden" name="product_name" value="Carnations">
+            <button type="submit" class="w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
+
+    </div>
+</div>
+
 
                         <!-- Lilies -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/lily.jpg')}}" alt="Lilies" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Lilies</h3>
-                                <p class="mt-1 text-sm text-gray-500">Elegant lilies, 10 stems of refined beauty</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.400.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
+<div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+    <div class="h-64 w-full overflow-hidden">
+        <img src="{{asset('images/lily.jpg')}}" alt="Lilies" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
+    </div>
+    <div class="p-4">
+        <h3 class="text-lg font-medium text-gray-900">Lilies</h3>
+        <p class="mt-1 text-sm text-gray-500">Elegant lilies, 10 stems of refined beauty</p>
+        <div class="mt-4 flex justify-between items-center">
+            <span class="text-base font-bold text-emerald-600">Rs.400.00</span>
+          <form action="{{ route('order.add') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_name" value="Llies">
+                <input type="hidden" name="price" value="400.00">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+        <form action="{{ route('order.cancel') }}" method="POST" class="mt-2">
+            @csrf
+            <input type="hidden" name="product_name" value="Lilies">
+            <button type="submit" class="w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
 
-                        <!-- Orchids -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/orchid.jpg')}}" alt="Orchids" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Orchids</h3>
-                                <p class="mt-1 text-sm text-gray-500">Exotic orchids for happiness, 10 stems of elegance</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.699.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
+    </div>
+</div>
+
+                       <!-- Orchids -->
+<div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+    <div class="h-64 w-full overflow-hidden">
+        <img src="{{asset('images/orchid.jpg')}}" alt="Orchids" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
+    </div>
+    <div class="p-4">
+        <h3 class="text-lg font-medium text-gray-900">Orchids</h3>
+        <p class="mt-1 text-sm text-gray-500">Exotic orchids for happiness, 10 stems of elegance</p>
+        <div class="mt-4 flex justify-between items-center">
+            <span class="text-base font-bold text-emerald-600">Rs.699.99</span>
+            <form action="{{ route('order.add') }}" method="POST">
+                @csrf
+                <input type="hidden" name="product_name" value="Orchids">
+                <input type="hidden" name="price" value="699.99">
+                <button type="submit" class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
+                    <i class="fas fa-plus mr-1"></i> Add
+                </button>
+            </form>
+        </div>
+        <form action="{{ route('order.cancel') }}" method="POST" class="mt-2">
+            @csrf
+            <input type="hidden" name="product_name" value="Orchids">
+            <button type="submit" class="w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
+                Cancel
+            </button>
+        </form>
+    </div>
+</div>
                     </div>
                 </div>
 
