@@ -4,161 +4,145 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fiora - Floral Collection</title>
-    <!-- Alpine.js CDN -->
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .quantity-control {
+            display: flex;
+            align-items: center;
+        }
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #dee2e6;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .quantity-input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            border-left: none;
+            border-right: none;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+        .hover-shadow {
+            transition: box-shadow 0.3s ease;
+        }
+        .hover-shadow:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .flower-image {
+        height: 250px; 
+        width: 100%;
+        object-fit: cover;
+        border-radius: 0.25rem 0.25rem 0 0; /* Optional: matches card rounding */
+        }
+    </style>
 </head>
-<body class="font-sans antialiased">
+<body>
     <!-- Navigation -->
-    <nav class="bg-emerald-700 sticky top-0 z-50 shadow-lg" x-data="{ mobileMenuOpen: false, flowerMenuOpen: false }">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="{{ url('/') }}" class="flex-shrink-0 flex items-center text-white text-xl font-bold">
-                        <i class="fas fa-seedling mr-2"></i> FIORA
-                    </a>
-                </div>
-
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <!-- Main Links -->
-                    <div class="flex space-x-4">
-                        <a href="{{ url('/') }}" class="text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->is('/') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">Home</a>
-                        
-                        <!-- Flower Categories Dropdown -->
-                        <div class="relative" x-data="{ flowerMenuOpen: false }">
-                            <button @click="flowerMenuOpen = !flowerMenuOpen" 
-                                    class="text-white px-3 py-2 rounded-md text-sm font-medium flex items-center {{ request()->is('flowers') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">
-                                Floral Collection
-                                <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-
-                            <!-- Flower Dropdown Menu -->
-                            <div x-show="flowerMenuOpen" 
-                                 @click.away="flowerMenuOpen = false"
-                                 x-transition:enter="transition ease-out duration-100"
-                                 x-transition:enter-start="transform opacity-0 scale-95"
-                                 x-transition:enter-end="transform opacity-100 scale-100"
-                                 x-transition:leave="transition ease-in duration-75"
-                                 x-transition:leave-start="transform opacity-100 scale-100"
-                                 x-transition:leave-end="transform opacity-0 scale-95"
-                                 class="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
-                                <div class="py-1">
-                                    <a href="#rose" @click="flowerMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 flex items-center">
-                                        <i class="fas fa-heart text-emerald-600 mr-2 w-5"></i> Rose Collection
-                                    </a>
-                                    <a href="#lotus" @click="flowerMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 flex items-center">
-                                        <i class="fas fa-spa text-emerald-600 mr-2 w-5"></i> Lotus Collection
-                                    </a>
-                                    <a href="#otherfl" @click="flowerMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 flex items-center">
-                                        <i class="fas fa-leaf text-emerald-600 mr-2 w-5"></i> Other Blooms
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <a href="{{ url('arrangements') }}" class="text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->is('arrangements') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">Arrangements</a>
-                        <a href="{{ url('about') }}" class="text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->is('about') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">Our Story</a>
-                        @auth
-                        <a href="{{ url('/dashboard') }}" class="text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->is('dashboard') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">Dashboard</a>
-                        @endauth
-                    </div>
-
-                    <!-- Auth Links -->
-                    <div class="flex items-center space-x-4 ml-4">
-                        <a href="{{ url('checkout') }}" class="relative inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-800 hover:bg-emerald-600">
-                            <i class="fas fa-shopping-cart mr-1"></i> Cart
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold" href="{{ url('/') }}">
+                <i class="fas fa-seedling me-2"></i> FIORA
+            </a>
+            
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Navigation Content -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Home</a>
+                    </li>
+                    
+                    <!-- Flower Categories Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {{ request()->is('flowers') ? 'active' : '' }}" 
+                           href="#" 
+                           id="flowersDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Floral Collection
                         </a>
+                        <ul class="dropdown-menu" aria-labelledby="flowersDropdown">
+                            <li><a class="dropdown-item" href="#rose"><i class="fas fa-heart text-success me-2"></i> Rose Collection</a></li>
+                            <li><a class="dropdown-item" href="#lotus"><i class="fas fa-spa text-success me-2"></i> Lotus Collection</a></li>
+                            <li><a class="dropdown-item" href="#otherfl"><i class="fas fa-leaf text-success me-2"></i> Other Blooms</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('arrangements') ? 'active' : '' }}" href="{{ url('arrangements') }}">Arrangements</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ url('about') }}">Our Story</a>
+                    </li>
+                    @auth
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}" href="{{ url('/dashboard') }}">Dashboard</a>
+                    </li>
+                    @endauth
+                </ul>
+                
+                
+                <!-- Auth Links -->
+                <div class="d-flex align-items-center">
+                    <a href="{{ url('checkout') }}" class="btn btn-outline-light me-2">
+                        <i class="fas fa-shopping-cart me-1"></i> Cart
+                    </a>
 
-                        @auth
-                        <!-- User Dropdown -->
-                        <div class="relative" x-data="{ open: false}">
-                            <button @click="open = !open" type="button" class="flex items-center text-sm rounded-full focus:outline-none">
-                                <span class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-emerald-800 bg-white">
-                                    {{ Auth::user()->name }}
-                                    <svg class="ml-2 -mr-1 h-5 w-5 text-emerald-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                </span>
-                            </button>
-
-                            <div x-show="open" 
-                                 @click.away="open = false"
-                                 x-transition
-                                 class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
-                                <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
-                                    <i class="fas fa-user-circle mr-2 text-emerald-600"></i> Your Profile
-                                </a>
+                    @auth
+                    <!-- User Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" 
+                                id="userDropdown"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="fas fa-user-circle text-success me-2"></i> Your Profile</a></li>
+                            <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
-                                        <i class="fas fa-sign-out-alt mr-2 text-emerald-600"></i> Sign Out
+                                    <button type="submit" class="dropdown-item">
+                                        <i class="fas fa-sign-out-alt text-success me-2"></i> Sign Out
                                     </button>
                                 </form>
-                            </div>
-                        </div>
-                        @else
-                        <!-- Guest Links -->
-                        <a href="{{ route('login') }}" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-emerald-800 bg-white hover:bg-gray-100">
-                            <i class="fas fa-user mr-1"></i> Log In
-                        </a>
-                        <a href="{{ route('register') }}" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-emerald-800 bg-white hover:bg-gray-100">
-                            <i class="fas fa-star mr-1"></i> Register
-                        </a>
-                        @endauth
+                            </li>
+                        </ul>
                     </div>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-emerald-600 focus:outline-none">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu -->
-        <div class="md:hidden" x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" x-transition>
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="{{ url('/') }}" class="text-white block px-3 py-2 rounded-md text-base font-medium {{ request()->is('/') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">Home</a>
-                <a href="{{ url('flowers') }}" class="text-white block px-3 py-2 rounded-md text-base font-medium {{ request()->is('flowers') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">Floral Collection</a>
-                <a href="{{ url('arrangements') }}" class="text-white block px-3 py-2 rounded-md text-base font-medium {{ request()->is('arrangements') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">Artisan Arrangements</a>
-                <a href="{{ url('about') }}" class="text-white block px-3 py-2 rounded-md text-base font-medium {{ request()->is('about') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">Our Story</a>
-                @auth
-                <a href="{{ url('/dashboard') }}" class="text-white block px-3 py-2 rounded-md text-base font-medium {{ request()->is('dashboard') ? 'bg-emerald-800' : 'hover:bg-emerald-600' }}">Dashboard</a>
-                @endauth
-                
-                <div class="pt-4 border-t border-emerald-800">
-                    <a href="{{ url('checkout') }}" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-white hover:bg-emerald-600">
-                        <i class="fas fa-shopping-cart mr-2"></i> Cart
-                    </a>
                     
-                    @auth
-                    <a href="{{ route('profile.edit') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-emerald-600">
-                        <i class="fas fa-user-circle mr-2"></i> Your Profile
-                    </a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="w-full text-left block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-emerald-600">
-                            <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
-                        </button>
-                    </form>
                     @else
-                    <a href="{{ route('login') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-emerald-600">
-                        <i class="fas fa-user mr-2"></i> Log In
+                    <a href="{{ route('login') }}" class="btn btn-outline-light me-2">
+                        <i class="fas fa-user me-1"></i> Log In
                     </a>
-                    <a href="{{ route('register') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-emerald-600">
-                        <i class="fas fa-star mr-2"></i> Register
+                    <a href="{{ route('register') }}" class="btn btn-outline-light">
+                        <i class="fas fa-star me-1"></i> Register
                     </a>
                     @endauth
                 </div>
@@ -166,380 +150,348 @@
         </div>
     </nav>
 
-    <main class="py-8">
+@role('admin')
+<div class="text-end mb-3">
+    <a href="{{ route('flowers.editMode') }}" class="btn btn-warning shadow-sm px-4 py-2 rounded-pill fw-bold">
+        <i class="fas fa-edit me-2"></i> Edit Mode
+    </a>
+</div>
+@endrole
+    <main class="py-4">
         <!-- Hero Section -->
-        <section class="py-8 bg-emerald-50 border-b border-emerald-100">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center">
-                    <h1 class="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                        Our Floral Collection
-                    </h1>
-                    <p class="mt-3 max-w-2xl mx-auto text-lg text-gray-500">
-                        Discover nature's poetry in every petal - handpicked blooms to express your deepest emotions and brighten every occasion.
-                    </p>
-                </div>
+        <section class="py-5 bg-success bg-opacity-10 border-bottom border-success">
+            <div class="container text-center">
+                <h1 class="display-5 fw-bold">
+                    Our Floral Collection
+                </h1>
+                <p class="lead mx-auto" style="max-width: 600px;">
+                    Discover nature's poetry in every petal - handpicked blooms to express your deepest emotions and brighten every occasion.
+                </p>
             </div>
         </section>
 
         <!-- Flower Categories Navigation (Mobile) -->
-        <section class="md:hidden py-4 bg-white sticky top-16 z-40 shadow-sm">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex overflow-x-auto space-x-4 pb-2">
-                    <a href="#rose" class="whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800">
-                        <i class="fas fa-heart mr-1"></i> Roses
+        <section class="d-lg-none py-3 bg-white sticky-top" style="top: 56px;">
+            <div class="container">
+                <div class="d-flex overflow-auto pb-2">
+                    <a href="#rose" class="btn btn-sm btn-success me-2 rounded-pill">
+                        <i class="fas fa-heart me-1"></i> Roses
                     </a>
-                    <a href="#lotus" class="whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-50 text-emerald-700">
-                        <i class="fas fa-spa mr-1"></i> Lotus
+                    <a href="#lotus" class="btn btn-sm btn-outline-success me-2 rounded-pill">
+                        <i class="fas fa-spa me-1"></i> Lotus
                     </a>
-                    <a href="#otherfl" class="whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-50 text-emerald-700">
-                        <i class="fas fa-leaf mr-1"></i> Other Blooms
+                    <a href="#otherfl" class="btn btn-sm btn-outline-success rounded-pill">
+                        <i class="fas fa-leaf me-1"></i> Other Blooms
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Flowers Grid -->
-        <section class="py-8 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- Roses Section -->
-                <div id="rose" class="mb-12">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-emerald-100">
-                        <i class="fas fa-heart text-emerald-600 mr-2"></i> Rose Collection
-                    </h2>
-                    <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <!-- Red Roses -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                                New Arrival
-                            </div>
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/red rose.jpg')}}" alt="Red Roses" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Red Roses</h3>
-                                <p class="mt-1 text-sm text-gray-500">Classic red roses, a dozen stems of passionate perfection</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.1000.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
-                        <!-- White Roses -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/whiteRose.jpg')}}" alt="White Roses" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">White Roses</h3>
-                                <p class="mt-1 text-sm text-gray-500">Elegant white roses, a dozen stems of pure beauty</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.799.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
+@php
+$cart = session('cart', []);
+@endphp
 
-                        <!-- Yellow Roses -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                                Sale
-                            </div>
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/yellowrose.jpg')}}" alt="Yellow Roses" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Yellow Roses</h3>
-                                <p class="mt-1 text-sm text-gray-500">Sunny yellow roses, 8 stems of cheerful delight</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <div>
-                                        <span class="text-sm line-through text-gray-500 mr-2">Rs.899.99</span>
-                                        <span class="text-base font-bold text-emerald-600">Rs.799.99</span>
-                                    </div>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
+@if(count($cart) > 0)
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title"> Your Cart</h5>
+            <ul class="list-group">
+                @foreach($cart as $id => $item)
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            {{ $item['name'] }} (x{{ $item['qty'] }})
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <strong class="me-3">Rs.{{ number_format($item['price'] * $item['qty'], 2) }}</strong>
+                            <form method="POST" action="{{ route('cart.remove') }}">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $id }}">
+                                <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
+                            </form>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+@endif
+
+
+
+     <!-- Flowers Grid -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <!-- Roses Section -->
+        <div id="rose" class="mb-5">
+            <h2 class="h2 fw-bold mb-4 pb-2 border-bottom border-success">
+                <i class="fas fa-heart text-success me-2"></i> Rose Collection
+            </h2>
+            <div class="row g-4">
+ @foreach ($roses as $flower)
+                <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm hover-shadow">
+ <img src="{{ asset($flower->image) }}" alt="{{ $flower->name }}" class="flower-image">
+
+            <div class="card-body">
+                <h3 class="h5 card-title">{{ $flower->name }}</h3>
+                <p class="card-text text-muted small">{{ $flower->description }}</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <span class="fw-bold text-success">Rs.{{ number_format($flower->price, 2) }}</span>
+                    <div class="d-flex align-items-center">
+                        <form method="POST" action="{{ route('cart.add') }}" class="me-2">
+                            @csrf
+                            <input type="hidden" name="item_type" value="flower">
+                            <input type="hidden" name="item_id" value="{{ $flower->id }}">
+                            <input type="hidden" name="name" value="{{ $flower->name }}">
+                            <input type="hidden" name="price" value="{{ $flower->price }}">
+                            <input type="hidden" name="image" value="{{ $flower->image }}">
+                            
+                            <div class="input-group input-group-sm">
+                                <label for="qty" class="input-group-text">Qty:</label>
+                                <input type="number" name="qty" value="1" min="1" class="form-control" style="width: 60px;" required>
+                                <button class="btn btn-outline-success" type="submit">
+                                    <i class="fas fa-cart-plus"></i>
                                 </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                </div>
-
-                <!-- Lotus Section -->
-                <div id="lotus" class="mb-12">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-emerald-100">
-                        <i class="fas fa-spa text-emerald-600 mr-2"></i> Lotus Collection
-                    </h2>
-                    <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <!-- White Lotus -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/Wlotus.jpg')}}" alt="White Lotus" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">White Lotus</h3>
-                                <p class="mt-1 text-sm text-gray-500">Pure white lotus, 10 stems of spiritual elegance</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.699.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Pink Lotus -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/Plotus.jpg')}}" alt="Pink Lotus" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Pink Lotus</h3>
-                                <p class="mt-1 text-sm text-gray-500">Beautiful pink lotus, 10 stems of delicate charm</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.599.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Blue Lotus -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10">
-                                New Arrival
-                            </div>
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/Blotus.jpg')}}" alt="Blue Lotus" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Blue Lotus</h3>
-                                <p class="mt-1 text-sm text-gray-500">Rare blue lotus, 10 stems of mystical beauty</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.1099.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Other Flowers Section -->
-                <div id="otherfl">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6 pb-2 border-b border-emerald-100">
-                        <i class="fas fa-leaf text-emerald-600 mr-2"></i> Other Blooms
-                    </h2>
-                    <div class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <!-- Carnations -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/carnation.jpg')}}" alt="Carnations" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Carnations</h3>
-                                <p class="mt-1 text-sm text-gray-500">Colorful carnations, 10 stems of lasting beauty</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.700.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Lilies -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/lily.jpg')}}" alt="Lilies" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Lilies</h3>
-                                <p class="mt-1 text-sm text-gray-500">Elegant lilies, 10 stems of refined beauty</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.400.00</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Orchids -->
-                        <div class="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                            <div class="h-64 w-full overflow-hidden">
-                                <img src="{{asset('images/orchid.jpg')}}" alt="Orchids" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300">
-                            </div>
-                            <div class="p-4">
-                                <h3 class="text-lg font-medium text-gray-900">Orchids</h3>
-                                <p class="mt-1 text-sm text-gray-500">Exotic orchids for happiness, 10 stems of elegance</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-base font-bold text-emerald-600">Rs.699.99</span>
-                                    <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-full text-sm font-medium text-emerald-600 hover:bg-emerald-50">
-                                        <i class="fas fa-plus mr-1"></i> Add
-                                    </button>
-                                </div>
-                                <button class="mt-2 w-full py-1.5 px-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-500 hover:bg-red-600">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pagination -->
-                <div class="mt-12 flex justify-center">
-                    <nav class="flex items-center space-x-2">
-                        <button class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50" disabled>
-                            Previous
-                        </button>
-                        <button class="inline-flex items-center px-3 py-1 border border-emerald-600 rounded-md text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700">
-                            1
-                        </button>
-                        <button class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                            2
-                        </button>
-                        <button class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                            3
-                        </button>
-                        <button class="inline-flex items-center px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                            Next
-                        </button>
-                    </nav>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+@endforeach
+      </div>
+        </div> <!-- Close rose section -->
+    
+            <div id="lotus" class="mb-5">
+            <h2 class="h2 fw-bold mb-4 pb-2 border-bottom border-success">
+                <i class="fas fa-spa text-success me-2"></i> Lotus Collection
+            </h2>
+            <div class="row g-4">
+                @foreach ($lotus as $flower)
+                <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm hover-shadow">
+<img src="{{ asset($flower->image) }}" alt="{{ $flower->name }}" class="flower-image">
+
+            <div class="card-body">
+                <h3 class="h5 card-title">{{ $flower->name }}</h3>
+                <p class="card-text text-muted small">{{ $flower->description }}</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <span class="fw-bold text-success">Rs.{{ number_format($flower->price, 2) }}</span>
+                    <div class="d-flex align-items-center">
+                        <form method="POST" action="{{ route('cart.add') }}" class="me-2">
+                            @csrf
+                            <input type="hidden" name="item_type" value="flower">
+                            <input type="hidden" name="item_id" value="{{ $flower->id }}">
+                            <input type="hidden" name="name" value="{{ $flower->name }}">
+                            <input type="hidden" name="price" value="{{ $flower->price }}">
+                            <input type="hidden" name="image" value="{{ $flower->image }}">
+                            
+                            <div class="input-group input-group-sm">
+                                <label for="qty" class="input-group-text">Qty:</label>
+                                <input type="number" name="qty" value="1" min="1" class="form-control" style="width: 60px;" required>
+                                <button class="btn btn-outline-success" type="submit">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+         </div>
+                @endforeach
+            </div>
+        </div>
+
+              <!-- Other Flowers Section -->
+        <div id="otherfl" class="mb-5">
+            <h2 class="h2 fw-bold mb-4 pb-2 border-bottom border-success">
+                <i class="fas fa-leaf text-success me-2"></i> Other Blooms
+            </h2>
+            <div class="row g-4">
+                @foreach ($other as $flower)
+                <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm hover-shadow">
+<img src="{{ asset($flower->image) }}" alt="{{ $flower->name }}" class="flower-image">
+
+            <div class="card-body">
+                <h3 class="h5 card-title">{{ $flower->name }}</h3>
+                <p class="card-text text-muted small">{{ $flower->description }}</p>
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <span class="fw-bold text-success">Rs.{{ number_format($flower->price, 2) }}</span>
+                    <div class="d-flex align-items-center">
+                        <form method="POST" action="{{ route('cart.add') }}" class="me-2">
+                            @csrf
+                            <input type="hidden" name="item_type" value="flower">
+                            <input type="hidden" name="item_id" value="{{ $flower->id }}">
+                            <input type="hidden" name="name" value="{{ $flower->name }}">
+                            <input type="hidden" name="price" value="{{ $flower->price }}">
+                            <input type="hidden" name="image" value="{{ $flower->image }}">
+                            
+                            <div class="input-group input-group-sm">
+                                <label for="qty" class="input-group-text">Qty:</label>
+                                <input type="number" name="qty" value="1" min="1" class="form-control" style="width: 60px;" required>
+                                <button class="btn btn-outline-success" type="submit">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+                 </div>
+                @endforeach
+            </div>
+        </div> <!-- Close other flowers section -->
+    </div>
+</section>
+
+       
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white pt-12 pb-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer class="bg-dark text-white pt-5 pb-4">
+        <div class="container">
+            <div class="row g-4">
                 <!-- About Fiora -->
-                <div>
-                    <h3 class="text-xl font-bold mb-4 flex items-center">
-                        <i class="fas fa-seedling mr-2"></i> FIORA
+                <div class="col-md-6 col-lg-3">
+                    <h3 class="h5 fw-bold mb-3">
+                        <i class="fas fa-seedling me-2"></i> FIORA
                     </h3>
-                    <p class="text-gray-400 text-sm">
+                    <p class="text-secondary small">
                         Cultivating floral artistry since 2014, Fiora transforms nature's bounty into breathtaking botanical experiences that touch the soul.
                     </p>
-                    <div class="mt-4 flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-pinterest"></i>
-                        </a>
-                        <a href="#" class="text-gray-400 hover:text-white">
-                            <i class="fab fa-twitter"></i>
-                        </a>
+                    <div class="mt-3">
+                        <a href="#" class="text-secondary me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-secondary me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-secondary me-3"><i class="fab fa-pinterest"></i></a>
+                        <a href="#" class="text-secondary"><i class="fab fa-twitter"></i></a>
                     </div>
                 </div>
 
                 <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Explore Fiora</h3>
-                    <ul class="space-y-2">
-                        <li><a href="{{ url('/') }}" class="text-gray-400 hover:text-white text-sm">Home Garden</a></li>
-                        <li><a href="{{ url('flowers') }}" class="text-gray-400 hover:text-white text-sm">Floral Catalog</a></li>
-                        <li><a href="{{ url('arrangements') }}" class="text-gray-400 hover:text-white text-sm">Arrangements</a></li>
-                        <li><a href="{{ url('about') }}" class="text-gray-400 hover:text-white text-sm">Our Story</a></li>
+                <div class="col-md-6 col-lg-3">
+                    <h3 class="h5 fw-bold mb-3">Explore Fiora</h3>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="{{ url('/') }}" class="text-secondary">Home Garden</a></li>
+                        <li class="mb-2"><a href="{{ url('flowers') }}" class="text-secondary">Floral Catalog</a></li>
+                        <li class="mb-2"><a href="{{ url('arrangements') }}" class="text-secondary">Arrangements</a></li>
+                        <li><a href="{{ url('about') }}" class="text-secondary">Our Story</a></li>
                     </ul>
                 </div>
 
                 <!-- Customer Service -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Support</h3>
-                    <ul class="space-y-2">
-                        <li><a href="{{ url('login') }}" class="text-gray-400 hover:text-white text-sm">Your Account</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Floral Consultations</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Delivery Information</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Share Your Thought</a></li>
+                <div class="col-md-6 col-lg-3">
+                    <h3 class="h5 fw-bold mb-3">Support</h3>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="{{ url('login') }}" class="text-secondary">Your Account</a></li>
+                        <li class="mb-2"><a href="#" class="text-secondary">Floral Consultations</a></li>
+                        <li class="mb-2"><a href="#" class="text-secondary">Delivery Information</a></li>
+                        <li><a href="#" class="text-secondary">Share Your Thought</a></li>
                     </ul>
                 </div>
 
                 <!-- Contact -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Visit Our Shop</h3>
-                    <address class="text-gray-400 text-sm not-italic">
-                        <div class="flex items-start mb-2">
-                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                <div class="col-md-6 col-lg-3">
+                    <h3 class="h5 fw-bold mb-3">Visit Our Shop</h3>
+                    <address class="small text-secondary not-italic">
+                        <div class="d-flex mb-2">
+                            <i class="fas fa-map-marker-alt mt-1 me-2"></i>
                             <span>56/5, Kandy Road<br>Nuwara-eliya, Sri Lanka</span>
                         </div>
-                        <div class="flex items-center mb-2">
-                            <i class="fas fa-phone mr-2"></i>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-phone me-2"></i>
                             <span>+94 76 456 132</span>
                         </div>
-                        <div class="flex items-center mb-2">
-                            <i class="fas fa-envelope mr-2"></i>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-envelope me-2"></i>
                             <span>FioraShop@gmail.com</span>
                         </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-clock mr-2"></i>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-clock me-2"></i>
                             <span>Mon-Sat: 9am-4pm</span>
                         </div>
                     </address>
                 </div>
             </div>
 
-            <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-                <div class="text-center md:text-left mb-4 md:mb-0">
-                    <p class="text-gray-400 text-sm">
+            <div class="mt-5 pt-4 border-top border-secondary d-md-flex justify-content-between align-items-center">
+                <div class="text-center text-md-start mb-3 mb-md-0">
+                    <p class="small text-secondary">
                         &copy; 2023 Fiora Botanical Atelier. All petals preserved.
                     </p>
-                    <p class="text-gray-500 text-xs mt-1">
-                        Crafted with <i class="fas fa-heart text-red-400"></i> by Dinura Banuka
+                    <p class="small text-secondary">
+                        Crafted with <i class="fas fa-heart text-danger"></i> by Dinura Banuka
                     </p>
                 </div>
-                <div class="flex items-center">
-                    <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
-                    <span class="text-gray-400 text-sm">Find Our Floral Studio</span>
+                <div class="d-flex justify-content-center justify-content-md-end align-items-center">
+                    <i class="fas fa-map-marker-alt text-secondary me-2"></i>
+                    <span class="small text-secondary">Find Our Floral Studio</span>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Quantity Control Script -->
     <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        document.addEventListener('DOMContentLoaded', function() {
+            // Quantity increment/decrement functionality
+            document.querySelectorAll('.quantity-control').forEach(control => {
+                const decrementBtn = control.querySelector('.decrement');
+                const incrementBtn = control.querySelector('.increment');
+                const quantityInput = control.querySelector('.quantity-input');
+                
+                decrementBtn.addEventListener('click', () => {
+                    let value = parseInt(quantityInput.value);
+                    if (value > 1) {
+                        quantityInput.value = value - 1;
+                    }
+                });
+                
+                incrementBtn.addEventListener('click', () => {
+                    let value = parseInt(quantityInput.value);
+                    quantityInput.value = value + 1;
+                });
+                
+                // Ensure the value doesn't go below 1 when manually changed
+                quantityInput.addEventListener('change', () => {
+                    if (quantityInput.value < 1 || isNaN(quantityInput.value)) {
+                        quantityInput.value = 1;
+                    }
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Add to cart functionality
+            document.querySelectorAll('.btn-success').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.card');
+                    const title = card.querySelector('.card-title').textContent;
+                    const price = card.querySelector('.fw-bold.text-success').textContent;
+                    const quantity = card.querySelector('.quantity-input').value;
+                    
+                    // Here you would typically send this data to your cart system
+                    alert(`Added to cart: ${quantity} x ${title} (${price} each)`);
                 });
             });
         });
